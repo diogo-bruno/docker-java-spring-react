@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+
+  <springProperty
+    scope="context"
+    name="ambiente"
+    source="spring.profiles.active" />
+  <springProperty
+    scope="context"
+    name="appname"
+    source="spring.application.name" />
+
+  <appender
+    name="CONSOLE"
+    class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender
+    name="ELASTIC"
+    class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+    <url>http://localhost:9200/_bulk</url>
+    <index>logback_${ambiente}_${appname}_%date{yyyy-MM-dd}</index>
+    <type>${ambiente}_${appname}</type>
+    <errorsToStderr>true</errorsToStderr>
+    <includeCallerData>true</includeCallerData>
+    <properties>
+      <property>
+        <name>host</name>
+        <value>${HOSTNAME}</value>
+        <allowEmpty>false</allowEmpty>
+      </property>
+      <property>
+        <name>severity</name>
+        <value>%level</value>
+      </property>
+      <property>
+        <name>thread</name>
+        <value>%thread</value>
+      </property>
+      <property>
+        <name>stacktrace</name>
+        <value>%ex</value>
+      </property>
+      <property>
+        <name>logger</name>
+        <value>%logger</value>
+      </property>
+    </properties>
+    <headers>
+      <header>
+        <name>Content-Type</name>
+        <value>application/json</value>
+      </header>
+    </headers>
+  </appender>
+
+  <springProfile name="producao">
+    <appender
+      name="FILE"
+      class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>/var/log/apps/${appname}/today.txt</file>
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>/var/log/apps/${appname}/%d{yyyy-MM-dd}.txt</fileNamePattern>
+        <maxHistory>30</maxHistory>
+      </rollingPolicy>
+      <encoder>
+        <pattern>%d [%thread] %-5level %logger{36} - %msg%n</pattern>
+      </encoder>
+    </appender>
+  </springProfile>
+
+  <appender
+    name="ASYNC_CONSOLE"
+    class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="CONSOLE" />
+  </appender>
+
+  <appender
+    name="ASYNC_ELASTIC"
+    class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="ELASTIC" />
+  </appender>
+
+  <springProfile name="producao">
+    <appender
+      name="ASYNC_FILE"
+      class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="FILE" />
+    </appender>
+  </springProfile>
+
+  <root level="INFO">
+    <appender-ref ref="ASYNC_CONSOLE" />
+    <springProfile name="producao">
+      <appender-ref ref="ASYNC_FILE" />
+    </springProfile>
+    <springProfile name="producao,homologacao">
+      <appender-ref ref="ASYNC_ELASTIC" />
+    </springProfile>
+  </root>
+
+</configuration>
