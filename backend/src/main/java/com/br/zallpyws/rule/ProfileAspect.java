@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.br.zallpyws.vo.UserVO;
 
 @Aspect
 @Component
@@ -24,35 +24,34 @@ public class ProfileAspect {
   public Object ignore(ProceedingJoinPoint joinPoint, Profile profile) throws Throwable {
 
     HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-    JsonNode usuario = (JsonNode) request.getAttribute("usuario");
+    UserVO user = (UserVO) request.getAttribute("user");
 
-    String[] perfisUsuario = getPerfisUsuario(usuario);
-    String[] perfisAnotados = profile.value();
+    String[] profilesUser = getProfileUser(user);
+    String[] profileNoted = profile.value();
 
-    if (!hasPermission(perfisUsuario, perfisAnotados)) {
+    if (!hasPermission(profilesUser, profileNoted)) {
       HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
-      response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-          String.format("Seus perfis %s não podem acessar esse método. Requer %s.", Arrays.toString(perfisUsuario), Arrays.toString(perfisAnotados)));
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, String.format("Seus perfis %s não podem acessar esse método. Requer %s.", Arrays.toString(profilesUser), Arrays.toString(profilesUser)));
       return null;
     }
 
     return joinPoint.proceed();
   }
 
-  private boolean hasPermission(String[] perfisUsuario, String[] perfisAnotados) {
-    for (String perfilUsuario : perfisUsuario)
-      for (String perfilAnotado : perfisAnotados)
-        if (perfilUsuario.equals(perfilAnotado))
+  private boolean hasPermission(String[] profilesUser, String[] perfisAnotados) {
+    for (String profileUser : profilesUser)
+      for (String perfilNoted : perfisAnotados)
+        if (profileUser.equals(perfilNoted))
           return true;
     return false;
   }
 
-  private String[] getPerfisUsuario(JsonNode usuario) {
+  private String[] getProfileUser(UserVO user) {
     List<String> list = new ArrayList<String>();
-    JsonNode perfis = usuario.get("perfis");
-    if (perfis != null) {
-      for (JsonNode perfil : perfis) {
-        list.add(perfil.get("descricao").asText().toString().toUpperCase());
+    List<String> profiles = user.getProfiles();
+    if (profiles != null) {
+      for (String profile : profiles) {
+        list.add(profile.toUpperCase());
       }
     }
     return list.toArray(new String[0]);

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name = "project")
+@Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Project implements Serializable {
 
@@ -25,5 +25,7 @@ public class Project implements Serializable {
   @Getter @Setter private String description;
 
   @Getter @Setter @Transient long totalMinutesWorked;
+
+  @Getter @Setter @Transient long totalWorkers;
 
 }

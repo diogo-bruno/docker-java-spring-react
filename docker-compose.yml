@@ -2,6 +2,7 @@ version: '3'
 
 services:
   mysqlsrv:
+    container_name: zallpy-mysql
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: 'mysqldbzallpy'
@@ -11,15 +12,44 @@ services:
     volumes:
       - ./volumes/MySql:/var/lib/mysql
     networks:
-      - mysql-compose-network
+      - zallpy-compose-network
 
   adminer:
+    container_name: zallpy-adminer
     image: adminer
     ports:
       - 8080:8080
     networks:
-      - mysql-compose-network
+      - zallpy-compose-network
+
+  # backend:
+  #   container_name: zallpy-java-spring-ws
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #     args:
+  #       buildno: 1
+  #   ports:
+  #     - 8010:8010
+  #   depends_on:
+  #     - mysqlsrv
+  #   networks:
+  #     - zallpy-compose-network
+  #   links:
+  #     - mysqlsrv
+      
+  # frontend:
+  #   container_name: zallpy-react-app
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #     args:
+  #       buildno: 1
+  #   ports:
+  #     - 3000:80
+  #   depends_on:
+  #     - backend
 
 networks:
-  mysql-compose-network:
+  zallpy-compose-network:
     driver: bridge

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name = "time_worked")
+@Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TimeWorked implements Serializable {
 
@@ -29,8 +29,8 @@ public class TimeWorked implements Serializable {
 
   @Getter @Setter private Date endWork;
 
-  @Getter @Setter @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE }) @OrderBy("id") private Project project;
+  @Getter @Setter @ManyToOne(cascade = { CascadeType.DETACH }) @OrderBy("id") private Project project;
 
-  @Getter @Setter @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE }) @OrderBy("id") private User user;
+  @Getter @Setter @ManyToOne(cascade = { CascadeType.DETACH }) @OrderBy("id") private User user;
 
 }

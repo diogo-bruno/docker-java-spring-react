@@ -15,7 +15,7 @@ import lombok.SneakyThrows;
 public class RelaxSecurity {
 
   @SneakyThrows
-  public static void permitirTodosOsCertificadosHTTPS() {
+  public static void allowAllCertificatesHTTPS() {
 
     HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
       public boolean verify(String hostname, SSLSession session) {

@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -23,7 +23,7 @@ import com.google.common.base.Objects;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name = "user")
+@Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class User implements Serializable {
 
@@ -35,9 +35,9 @@ public class User implements Serializable {
   @Getter @Setter private String name;
   @JsonIgnore @Getter @Setter private String password;
 
-  @Column @ElementCollection(targetClass = String.class) @Getter @Setter private List<String> profiles;
+  @Getter @Setter @ElementCollection(fetch = FetchType.EAGER) private List<String> profiles;
 
-  @Getter @Setter @OneToMany(orphanRemoval = true, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE }) @OrderBy("id") private List<Project> projects;
+  @Getter @Setter @ManyToMany(cascade = { CascadeType.DETACH }) @JoinColumn(name = "projects_id", referencedColumnName = "id", insertable = false, updatable = false) private List<Project> projects;
 
   @Override
   public int hashCode() {

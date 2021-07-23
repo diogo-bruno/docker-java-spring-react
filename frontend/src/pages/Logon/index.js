@@ -1,53 +1,48 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-
-import api from '../../services/api';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login } from '../../store/actions';
+import PropTypes from 'prop-types';
+import logoImg from '../../assets/logo.svg';
+import launchPageImg from '../../assets/launch-page.png';
 
 import './styles.css';
 
-import logoImg from '../../assets/logo.svg';
-import heroesImg from '../../assets/heroes.png';
+let Logon = ({ loginProps, stateToProps }) => {
+  const [email, setEmail] = useState('diogo.bruno2@gmail.com');
+  const [password, setPassword] = useState('admin123');
 
-export default function Logon() {
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
-
-  const history = useHistory();
-
-  async function handleLogin(e) {
-    e.preventDefault();
-
-    try {
-      const response = await api.post('login', { cpf, password });
-
-      console.log(response);
-
-      history.push('/home');
-    } catch (err) {
-      alert('Falha no login, tente novamente.');
-    }
+  if (stateToProps.isAuthenticated) {
+    window.localStorage.setItem('token', stateToProps.token);
   }
 
-  return (
+  function handleLogin(event) {
+    event.preventDefault();
+    loginProps({ email, password });
+  }
+
+  return stateToProps.isAuthenticated ? (
+    <Redirect to="/home" />
+  ) : (
     <div className="logon-container">
       <section className="form">
         <img src={logoImg} alt="Logo" />
 
-        <form onSubmit={handleLogin}>
-          <h1>Faça seu login</h1>
-
+        <form onSubmit={handleLogin} autoComplete="new-password">
           <input
-            type="number"
-            placeholder="CPF"
-            value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
+            type="email"
+            placeholder="Email"
+            autoComplete="new-password"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
           />
 
           <input
             type="password"
             placeholder="Senha"
+            autoComplete="new-password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(event) => setPassword(event.target.value)}
           />
 
           <button className="button" type="submit">
@@ -56,7 +51,26 @@ export default function Logon() {
         </form>
       </section>
 
-      <img src={heroesImg} alt="Heroes" />
+      <img src={launchPageImg} alt="LaunchPage" />
     </div>
   );
-}
+};
+
+Logon.propTypes = {
+  loginProps: PropTypes.func,
+  stateToProps: PropTypes.object,
+};
+
+const mapStateToProps = (state) => ({
+  stateToProps: state,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginProps: (dataLogin) => dispatch(login(dataLogin)),
+  };
+};
+
+Logon = connect(mapStateToProps, mapDispatchToProps)(Logon);
+
+export default Logon;

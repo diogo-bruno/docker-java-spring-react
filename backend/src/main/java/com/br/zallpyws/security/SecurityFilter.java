@@ -18,8 +18,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.br.zallpyws.model.User;
 import com.br.zallpyws.util.Public;
+import com.br.zallpyws.vo.UserVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +41,7 @@ public class SecurityFilter implements Filter {
         if (token == null)
           token = request.getParameter("token");
 
-        Pair<Integer, User> pair = tokenUtility.isTokenValido(token, request);
+        Pair<Integer, UserVO> pair = tokenUtility.isTokenValid(token);
 
         if (pair.getKey() == HttpServletResponse.SC_OK) {
           req.setAttribute("user", pair.getValue());

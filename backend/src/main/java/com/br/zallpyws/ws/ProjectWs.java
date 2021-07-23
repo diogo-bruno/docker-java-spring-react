@@ -37,14 +37,26 @@ public class ProjectWs {
 
   @Profile(Profile.ADM)
   @RequestMapping(value = "/listAllProjectsAndTimeWorked", method = { RequestMethod.GET })
-  public List<Project> listAllProjectsAndTimeWorked(HttpServletRequest request, @RequestHeader HttpHeaders headers, @PathVariable("id") Integer id) throws Exception {
+  public List<Project> listAllProjectsAndTimeWorked(HttpServletRequest request, @RequestHeader HttpHeaders headers) throws Exception {
     return projectService.listAllProjectsAndTimeWorked();
   }
 
   @Profile({ Profile.ADM, Profile.PROGRAMADOR })
-  @RequestMapping(value = "/getProject/{id}", method = { RequestMethod.GET })
-  public Project getProject(HttpServletRequest request, @RequestHeader HttpHeaders headers, @PathVariable("id") Integer id) throws Exception {
-    return projectService.getProject(id);
+  @RequestMapping(value = "/getProject/{projectId}", method = { RequestMethod.GET })
+  public Project getProject(HttpServletRequest request, @RequestHeader HttpHeaders headers, @PathVariable("projectId") Integer projectId) throws Exception {
+    return projectService.getProject(projectId);
+  }
+
+  @Profile({ Profile.ADM, Profile.PROGRAMADOR })
+  @RequestMapping(value = "/getAllProjectByUserId/{userId}", method = { RequestMethod.GET })
+  public List<Project> getAllProjectByUserId(HttpServletRequest request, @RequestHeader HttpHeaders headers, @PathVariable("userId") Integer userId) throws Exception {
+    return projectService.getAllProjectByUserId(userId, false);
+  }
+
+  @Profile({ Profile.ADM, Profile.PROGRAMADOR })
+  @RequestMapping(value = "/listAllProjectByUserId/{userId}", method = { RequestMethod.GET })
+  public List<Project> listAllProjectByUserId(HttpServletRequest request, @RequestHeader HttpHeaders headers, @PathVariable("userId") Integer userId) throws Exception {
+    return projectService.getAllProjectByUserId(userId, true);
   }
 
 }

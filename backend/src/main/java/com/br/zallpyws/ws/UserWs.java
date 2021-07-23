@@ -1,3 +1,4 @@
+
 package com.br.zallpyws.ws;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.zallpyws.model.User;
@@ -27,8 +29,20 @@ public class UserWs {
 
   @Public
   @RequestMapping(value = "/login", method = { RequestMethod.POST })
-  public UserVO createUser(HttpServletRequest request, @RequestHeader HttpHeaders headers, @RequestBody LoginVO loginVO) throws Exception {
+  public UserVO login(HttpServletRequest request, @RequestHeader HttpHeaders headers, @RequestBody LoginVO loginVO) throws Exception {
     return userService.getUserLogin(loginVO.getEmail(), loginVO.getPassword());
+  }
+
+  @Public
+  @RequestMapping(value = "/logoff", method = { RequestMethod.GET })
+  public void logoff(HttpServletRequest request, @RequestHeader HttpHeaders headers, @RequestParam("token") String token) throws Exception {
+    userService.logoffUserToken(token);
+  }
+
+  @Public
+  @RequestMapping(value = "/validate", method = { RequestMethod.GET })
+  public UserVO validate(HttpServletRequest request, @RequestHeader HttpHeaders headers, @RequestParam("token") String token) throws Exception {
+    return userService.validateUserToken(token);
   }
 
   @Profile(Profile.ADM)

@@ -1,14 +1,13 @@
 package com.br.zallpyws.util;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.StringJoiner;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class Utility {
 
@@ -52,16 +51,16 @@ public class Utility {
     }
   }
 
-  public static String generateHashFromString(String str) {
+  public static String generateBCryptHash(String str) {
+    return BCrypt.hashpw(str, BCrypt.gensalt());
+  }
+
+  public static boolean checkBCrypt(String passCheck, String pass2Check) {
     try {
-      MessageDigest digest = MessageDigest.getInstance("SHA-256");
-      byte[] encodedhash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
-      encodedhash.toString();
-    } catch (NoSuchAlgorithmException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      return BCrypt.checkpw(passCheck, pass2Check);
+    } catch (Exception e) {
+      throw new CustomException("HOUVE UM ERRO AO LOGAR, VERIFIQUE SE OS DADOS FORAM INFORMADOS CORRETAMENTE, SE NECESSÁRIO CLIQUE EM 'RECUPERAR SENHA'.");
     }
-    return null;
   }
 
 }

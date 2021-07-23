@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableCaching
 public class ZallpywsApplication {
   public static void main(String[] args) {
-    //RelaxSecurity.permitirTodosOsCertificadosHTTPS();
+    //RelaxSecurity.allowAllCertificatesHTTPS();
 
     try {
       SpringApplication.run(ZallpywsApplication.class, args);
