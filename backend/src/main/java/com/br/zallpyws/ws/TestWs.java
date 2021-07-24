@@ -60,10 +60,10 @@ public class TestWs {
     userADM.setPassword("admin");
     userADM.setName("Diogo Bruno ADM");
 
-    List<String> profiles = new ArrayList<String>();
-    profiles.add("ADM");
-    profiles.add("PROGRAMADOR");
-    userADM.setProfiles(profiles);
+    List<String> profilesADM = new ArrayList<String>();
+    profilesADM.add("ADM");
+    profilesADM.add("PROGRAMADOR");
+    userADM.setProfiles(profilesADM);
 
     List<Integer> idProjects = new ArrayList<Integer>();
     idProjects.add(newProjectA.getId());
@@ -78,13 +78,13 @@ public class TestWs {
     userPGR1.setPassword("programador1");
     userPGR1.setName("Programador 1");
 
-    List<String> profilePGR1 = new ArrayList<String>();
-    profilePGR1.add("PROGRAMADOR");
-    userPGR1.setProfiles(profiles);
+    List<String> profilesPGR1 = new ArrayList<String>();
+    profilesPGR1.add("PROGRAMADOR");
+    userPGR1.setProfiles(profilesPGR1);
 
     List<Integer> idProjectsPGR1 = new ArrayList<Integer>();
     idProjectsPGR1.add(newProjectA.getId());
-    userPGR1.setIdProjects(idProjects);
+    userPGR1.setIdProjects(idProjectsPGR1);
 
     User newUserPGR1 = userService.createUser(userPGR1);
 
@@ -94,14 +94,14 @@ public class TestWs {
     userPGR2.setPassword("programador2");
     userPGR2.setName("Programador 2");
 
-    List<String> profilePGR2 = new ArrayList<String>();
-    profilePGR2.add("PROGRAMADOR");
-    userPGR2.setProfiles(profiles);
+    List<String> profilesPGR2 = new ArrayList<String>();
+    profilesPGR2.add("PROGRAMADOR");
+    userPGR2.setProfiles(profilesPGR2);
 
     List<Integer> idProjectsPGR2 = new ArrayList<Integer>();
     idProjectsPGR2.add(newProjectA.getId());
     idProjectsPGR2.add(newProjectB.getId());
-    userPGR2.setIdProjects(idProjects);
+    userPGR2.setIdProjects(idProjectsPGR2);
 
     User newUserPGR2 = userService.createUser(userPGR2);
 
