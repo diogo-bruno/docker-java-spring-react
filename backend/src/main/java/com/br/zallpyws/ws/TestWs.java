@@ -74,9 +74,9 @@ public class TestWs {
 
     //ADD USER PROGRAMADOR 1 
     UserVO userPGR1 = new UserVO();
-    userPGR1.setEmail("zallpy.adm@gmail.com");
-    userPGR1.setPassword("admin");
-    userPGR1.setName("Diogo Bruno ADM");
+    userPGR1.setEmail("zallpy.programador1@gmail.com");
+    userPGR1.setPassword("programador1");
+    userPGR1.setName("Programador 1");
 
     List<String> profilePGR1 = new ArrayList<String>();
     profilePGR1.add("PROGRAMADOR");
@@ -90,9 +90,9 @@ public class TestWs {
 
     //ADD USER PROGRAMADOR 2 
     UserVO userPGR2 = new UserVO();
-    userPGR2.setEmail("zallpy.adm@gmail.com");
-    userPGR2.setPassword("admin");
-    userPGR2.setName("Diogo Bruno ADM");
+    userPGR2.setEmail("zallpy.programador2@gmail.com");
+    userPGR2.setPassword("programador2");
+    userPGR2.setName("Programador 2");
 
     List<String> profilePGR2 = new ArrayList<String>();
     profilePGR2.add("PROGRAMADOR");

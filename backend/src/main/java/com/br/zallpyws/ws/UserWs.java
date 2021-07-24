@@ -53,7 +53,7 @@ public class UserWs {
 
   @Profile(Profile.ADM)
   @RequestMapping(value = "/listAllUsers", method = { RequestMethod.GET })
-  public List<User> listAllUser(HttpServletRequest request, @RequestHeader HttpHeaders headers, @PathVariable("id") Integer id) throws Exception {
+  public List<User> listAllUser(HttpServletRequest request, @RequestHeader HttpHeaders headers) throws Exception {
     return userService.listAllUser();
   }
 

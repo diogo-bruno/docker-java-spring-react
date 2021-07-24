@@ -35,21 +35,38 @@ public class TimeWorkedService {
 
   public TimeWorked createTimeWorked(TimeWorkedVO timeWorkedVO) {
 
+    if (timeWorkedVO.getStartWork() == null) {
+      throw new CustomException("Informe a data de ínicio");
+    }
+
+    if (timeWorkedVO.getEndWork() == null) {
+      throw new CustomException("Informe a data de fim");
+    }
+
+    if (timeWorkedVO.getProjectId() == null) {
+      throw new CustomException("Informe a data de ínicio");
+    }
+
+    if (timeWorkedVO.getStartWork().after(timeWorkedVO.getEndWork())) {
+      throw new CustomException("A data de ínicio não pode ser maior que a data final");
+    }
+
     List<Object[]> startDateInProject = (List<Object[]>) dao.listNative("SELECT startWork,endWork FROM timeworked where project_id = ?1 and user_id = ?2", timeWorkedVO.getProjectId(),
         timeWorkedVO.getUserId());
 
     SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd H:m:s");
 
     try {
-      for (Object[] startEndDate : startDateInProject) {
+      if (startDateInProject != null && !startDateInProject.isEmpty())
+        for (Object[] startEndDate : startDateInProject) {
 
-        Date start = formatDate.parse(startEndDate[0].toString());
-        Date end = formatDate.parse(startEndDate[1].toString());
+          Date start = formatDate.parse(startEndDate[0].toString());
+          Date end = formatDate.parse(startEndDate[1].toString());
 
-        if (dateConflict(start, timeWorkedVO.getStartWork(), end, timeWorkedVO.getEndWork())) {
-          throw new CustomException("Existe um conflito de datas trabalhadas para este projeto!");
+          if (dateConflict(start, timeWorkedVO.getStartWork(), end, timeWorkedVO.getEndWork())) {
+            throw new CustomException("Existe um conflito de datas trabalhadas para este projeto!");
+          }
         }
-      }
 
     } catch (Exception e) {
       throw new CustomException(e.getMessage());

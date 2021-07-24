@@ -22,33 +22,29 @@ services:
     networks:
       - zallpy-compose-network
 
-  # backend:
-  #   container_name: zallpy-java-spring-ws
-  #   build:
-  #     context: ./backend
-  #     dockerfile: Dockerfile
-  #     args:
-  #       buildno: 1
-  #   ports:
-  #     - 8010:8010
-  #   depends_on:
-  #     - mysqlsrv
-  #   networks:
-  #     - zallpy-compose-network
-  #   links:
-  #     - mysqlsrv
-      
-  # frontend:
-  #   container_name: zallpy-react-app
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #     args:
-  #       buildno: 1
-  #   ports:
-  #     - 3000:80
-  #   depends_on:
-  #     - backend
+  backend:
+    container_name: zallpy-java-spring-ws
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 8010:8010
+    depends_on:
+      - mysqlsrv
+    networks:
+      - zallpy-compose-network
+    links:
+      - mysqlsrv
+
+  frontend:
+    container_name: zallpy-react-app
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:80
+    depends_on:
+      - backend
 
 networks:
   zallpy-compose-network:

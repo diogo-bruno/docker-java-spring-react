@@ -1,2 +1,3 @@
 volumes/Mysql/*
 !volumes/Mysql/.gitkeep
+.DS_Store

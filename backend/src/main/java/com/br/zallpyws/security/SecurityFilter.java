@@ -40,9 +40,7 @@ public class SecurityFilter implements Filter {
         String token = request.getHeader("token");
         if (token == null)
           token = request.getParameter("token");
-
         Pair<Integer, UserVO> pair = tokenUtility.isTokenValid(token);
-
         if (pair.getKey() == HttpServletResponse.SC_OK) {
           req.setAttribute("user", pair.getValue());
           chain.doFilter(req, res);

@@ -32,6 +32,11 @@ let Projects = ({ dataUser }) => {
     }
   }, [userId]);
 
+  function deleteTimeWorked(project) {
+    window.console.log(project);
+    window.alert('Ainda não implementado...');
+  }
+
   function timeConvert(time) {
     const hours = time / 60;
     const rhours = Math.floor(hours);
@@ -93,7 +98,9 @@ let Projects = ({ dataUser }) => {
                 <th scope="row">{project.description}</th>
                 <td>{timeConvert(project.totalMinutesWorked)}</td>
                 <td>
-                  <button>Excluir</button>
+                  <button onClick={() => deleteTimeWorked(project)}>
+                    Excluir
+                  </button>
                 </td>
               </tr>
             );
