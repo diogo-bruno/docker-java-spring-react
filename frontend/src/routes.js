@@ -20,7 +20,7 @@ let Routes = ({ isAuthenticated, setDataUserLoginProps }) => {
 
   if (!isAuthenticated && token) {
     axios
-      .get(`${urlsServices.zallpyWS}validate?token=${token}`)
+      .get(`${urlsServices.projectWS}validate?token=${token}`)
       .then((response) => {
         if (response.data) {
           setTokenValid(true);

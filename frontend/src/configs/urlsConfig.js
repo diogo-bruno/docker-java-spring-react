@@ -1,3 +1,3 @@
 export const urlsServices = {};
 
-urlsServices.zallpyWS = 'http://localhost:8010/';
+urlsServices.projectWS = 'http://localhost:8010/';

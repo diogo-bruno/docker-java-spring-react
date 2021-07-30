@@ -24,7 +24,7 @@ let TimeWorked = ({ dataUser }) => {
   useEffect(() => {
     if (userId) {
       axios
-        .get(`${urlsServices.zallpyWS}listAllProjectByUserId/${userId}`)
+        .get(`${urlsServices.projectWS}listAllProjectByUserId/${userId}`)
         .then((response) => {
           setMyProjects(response.data);
         });
@@ -48,7 +48,7 @@ let TimeWorked = ({ dataUser }) => {
 
     window.console.log(obj);
 
-    axios.post(`${urlsServices.zallpyWS}createTimeWorked`, obj).then(
+    axios.post(`${urlsServices.projectWS}createTimeWorked`, obj).then(
       (response) => {
         window.console.log(response);
         if (response.data.id) {

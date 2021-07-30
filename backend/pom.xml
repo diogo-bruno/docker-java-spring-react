@@ -12,18 +12,18 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>zallpyws</groupId>
-	<artifactId>zallpyws</artifactId>
+	<groupId>projectws</groupId>
+	<artifactId>projectws</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>zallpyws</name>
+	<name>projectws</name>
 
-	<description>zallpyws</description>
+	<description>projectws</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>com.br.zallpyws.ZallpywsApplication</start-class>
+		<start-class>com.br.project.ProjectApplication</start-class>
 		<java.version>1.8</java.version>
 		<logback.version>1.1.6</logback.version>
 	</properties>

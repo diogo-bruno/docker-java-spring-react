@@ -6,7 +6,7 @@ RUN sed -i 's/localhost:3306/mysqlsrv/g' /usr/src/app/src/main/resources/applica
 RUN cd /usr/src/app && mvn clean package -B
 
 FROM openjdk:8 
-COPY --from=build /usr/src/app/target/zallpyws-1.0.0-SNAPSHOT.jar /usr/app/zallpyws-1.0.0-SNAPSHOT.jar  
+COPY --from=build /usr/src/app/target/projectws-1.0.0-SNAPSHOT.jar /usr/app/projectws-1.0.0-SNAPSHOT.jar  
 EXPOSE 8010  
 ENV JAVA_OPTS ""
-CMD java ${JAVA_OPTS} -jar /usr/app/zallpyws-1.0.0-SNAPSHOT.jar
+CMD java ${JAVA_OPTS} -jar /usr/app/projectws-1.0.0-SNAPSHOT.jar

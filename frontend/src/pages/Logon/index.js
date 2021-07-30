@@ -9,8 +9,8 @@ import launchPageImg from '../../assets/launch-page.png';
 import './styles.css';
 
 let Logon = ({ loginProps, stateToProps }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('user.adm@gmail.com');
+  const [password, setPassword] = useState('admin');
 
   if (stateToProps.isAuthenticated) {
     window.localStorage.setItem('token', stateToProps.token);

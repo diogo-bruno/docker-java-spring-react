@@ -2,28 +2,28 @@ version: '3'
 
 services:
   mysqlsrv:
-    container_name: zallpy-mysql
+    container_name: project-mysql
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: 'mysqldbzallpy'
-      MYSQL_DATABASE: 'zallpy'
+      MYSQL_ROOT_PASSWORD: 'mysqldbproject'
+      MYSQL_DATABASE: 'project'
     ports:
       - '3306:3306'
     volumes:
       - ./volumes/MySql:/var/lib/mysql
     networks:
-      - zallpy-compose-network
+      - project-compose-network
 
   adminer:
-    container_name: zallpy-adminer
+    container_name: project-adminer
     image: adminer
     ports:
       - 8080:8080
     networks:
-      - zallpy-compose-network
+      - project-compose-network
 
   backend:
-    container_name: zallpy-java-spring-ws
+    container_name: project-java-spring-ws
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -32,12 +32,12 @@ services:
     depends_on:
       - mysqlsrv
     networks:
-      - zallpy-compose-network
+      - project-compose-network
     links:
       - mysqlsrv
 
   frontend:
-    container_name: zallpy-react-app
+    container_name: project-react-app
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -47,5 +47,5 @@ services:
       - backend
 
 networks:
-  zallpy-compose-network:
+  project-compose-network:
     driver: bridge

@@ -4,7 +4,7 @@ import { urlsServices } from '../configs/urlsConfig';
 
 function* fetchLogin(action) {
   const axiosResponse = yield axios
-    .post(`${urlsServices.zallpyWS}login`, action.dataLogin)
+    .post(`${urlsServices.projectWS}login`, action.dataLogin)
     .then(
       (response) => {
         if (response.data && response.data.token) {
@@ -26,7 +26,7 @@ function* fetchLogin(action) {
 function* fetchLogoff(action) {
   yield axios
     .get(
-      `${urlsServices.zallpyWS}logoff?token=${window.localStorage.getItem(
+      `${urlsServices.projectWS}logoff?token=${window.localStorage.getItem(
         'item'
       )}`
     )

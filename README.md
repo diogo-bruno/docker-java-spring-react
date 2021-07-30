@@ -29,7 +29,7 @@ docker-compose up
 
 ## User ADM Login
 
-- email: zallpy.adm@gmail.com
+- email: user.adm@gmail.com
 - password: admin
 
 ## Screenshots

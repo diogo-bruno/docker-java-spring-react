@@ -17,7 +17,7 @@ let Projects = ({ dataUser }) => {
   useEffect(() => {
     if (isAdm) {
       axios
-        .get(`${urlsServices.zallpyWS}listAllProjectsAndTimeWorked`)
+        .get(`${urlsServices.projectWS}listAllProjectsAndTimeWorked`)
         .then((response) => {
           setAllProjects(response.data);
         });
@@ -25,7 +25,7 @@ let Projects = ({ dataUser }) => {
 
     if (userId) {
       axios
-        .get(`${urlsServices.zallpyWS}getAllProjectByUserId/${userId}`)
+        .get(`${urlsServices.projectWS}getAllProjectByUserId/${userId}`)
         .then((response) => {
           setMyProjects(response.data);
         });
